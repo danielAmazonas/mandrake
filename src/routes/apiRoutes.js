@@ -34,7 +34,7 @@ class ApiRoutes {
 
         console.log(`Mensagem recebida: ${text}`);
 
-        let htmlText = text;
+        let htmlText = text.replace('<at>eqscl_output</at>&nbsp;', '');
         let plainText = textVersion(htmlText);
 
         try {
