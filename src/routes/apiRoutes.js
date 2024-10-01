@@ -1,3 +1,4 @@
+const textVersion = require('textversionjs');
 const sendToWhatsapp = require('../components/sendToWhatsapp');
 const { version } = require('../../package.json');
 require('dotenv').config();
@@ -33,8 +34,11 @@ class ApiRoutes {
 
         console.log(`Mensagem recebida: ${text}`);
 
+        let htmlText = text;
+        let plainText = textVersion(htmlText);
+
         try {
-            const result = await sendToWhatsapp('https://api.callmebot.com/whatsapp.php', process.env.PHONE, process.env.API_KEY_CALLMEBOT, text);
+            const result = await sendToWhatsapp('https://api.callmebot.com/whatsapp.php', process.env.PHONE, process.env.API_KEY_CALLMEBOT, plainText);
             // Envia a resposta após a chamada da API
             res.json({
                 text: `Recebi sua mensagem: "${text}"`,
