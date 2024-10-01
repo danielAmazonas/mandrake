@@ -29,12 +29,12 @@ class ApiRoutes {
     }
 
     async postWhatsappWebhook(req, res) {
-        console.log('Requisição recebida:', req.body);
+        // console.log('Requisição recebida:', req.body);
         const { text } = req.body; // Captura o texto e o usuário
 
         console.log(`Mensagem recebida: ${text}`);
 
-        let htmlText = text.replace('<at>eqscl_output</at>&nbsp;', '');
+        let htmlText = text.replace('<at>eqscl_output</at>&nbsp;', '🌐 Canal EQSCL: ');
         let plainText = textVersion(htmlText);
 
         try {
