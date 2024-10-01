@@ -38,7 +38,6 @@ class ApiRoutes {
             // Envia a resposta após a chamada da API
             res.json({
                 text: `Recebi sua mensagem: "${text}"`,
-                apiResponse: result.data // Inclui a resposta da API externa, se necessário
             });
         } catch (error) {
             console.error('Erro ao enviar mensagem:', error.message || error);
