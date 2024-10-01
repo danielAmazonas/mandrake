@@ -11,7 +11,7 @@ class ApiRoutes {
     initializeRoutes() {
         this.router.get('/', this.hello);
         this.router.get('/version', this.getVersion);
-        this.router.get('/whatsapp/webhook', this.getWhatsappWebhook.bind(this));
+        this.router.post('/whatsapp/webhook', this.getWhatsappWebhook.bind(this));
         this.router.post('/teams/webhook', this.postTeamsWebhook.bind(this));
     }
 
