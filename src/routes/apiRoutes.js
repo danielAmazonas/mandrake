@@ -33,15 +33,15 @@ class ApiRoutes {
 
         console.log(`Mensagem recebida: ${text}`);
 
-        // Envia a resposta após a chamada da API
-        res.json({
-            text: `Recebi sua mensagem: "${text}"`,
-        });
-
         try {
             const result = await sendToWhatsapp('https://api.callmebot.com/whatsapp.php', process.env.PHONE, process.env.API_KEY_CALLMEBOT, text);
-            res.json(result.data);
+            // Envia a resposta após a chamada da API
+            res.json({
+                text: `Recebi sua mensagem: "${text}"`,
+                apiResponse: result.data // Inclui a resposta da API externa, se necessário
+            });
         } catch (error) {
+            console.error('Erro ao enviar mensagem:', error.message || error);
             if (!res.headersSent) {
                 res.status(500).json({ error: 'Erro ao enviar mensagem.' });
             }
@@ -51,7 +51,7 @@ class ApiRoutes {
     postTeamsWebhook(req, res) {
         res.json({
             teams_webhook: 'teams_webhook'
-        })
+        });
     }
 }
 
