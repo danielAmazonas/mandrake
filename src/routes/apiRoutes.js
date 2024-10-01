@@ -11,7 +11,7 @@ class ApiRoutes {
     initializeRoutes() {
         this.router.get('/', this.hello);
         this.router.get('/version', this.getVersion);
-        this.router.post('/whatsapp/webhook', this.getWhatsappWebhook.bind(this));
+        this.router.post('/whatsapp/webhook', this.postWhatsappWebhook.bind(this));
         this.router.post('/teams/webhook', this.postTeamsWebhook.bind(this));
     }
 
@@ -27,7 +27,7 @@ class ApiRoutes {
         });
     }
 
-    async getWhatsappWebhook(req, res) {
+    async postWhatsappWebhook(req, res) {
         console.log('Requisição recebida:', req.body);
         const { text, user } = req.body; // Captura o texto e o usuário
 

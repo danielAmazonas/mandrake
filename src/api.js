@@ -11,4 +11,5 @@ const apiRoutes = new ApiRoutes(router);
 
 app.use('/.netlify/functions/api/v1', router);
 
+module.exports = app;
 module.exports.handler = serverless(app);
