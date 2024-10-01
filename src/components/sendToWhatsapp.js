@@ -1,6 +1,7 @@
 const axios = require('axios').default;
 
 const sendToWhatsapp = async (url, phone, apikey, text) => {
+    const validText = text && text.trim() !== '' ? text : '😔 Sem texto!';
     const options = {
         method: 'GET',
         url,
@@ -8,10 +9,9 @@ const sendToWhatsapp = async (url, phone, apikey, text) => {
             source: 'HA',
             phone,
             apikey,
-            text
+            text: validText
         },
     }
-
     try {
         const response = await axios.request(options);
         console.log('Resposta da API:', response.data);

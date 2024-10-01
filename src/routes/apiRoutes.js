@@ -40,11 +40,12 @@ class ApiRoutes {
 
         try {
             const result = await sendToWhatsapp('https://api.callmebot.com/whatsapp.php', process.env.PHONE, process.env.API_KEY_CALLMEBOT, text);
-            res.json(result);
+            res.json(result.data);
         } catch (error) {
-            res.status(500).json({ error: 'Erro ao enviar mensagem.' });
+            if (!res.headersSent) {
+                res.status(500).json({ error: 'Erro ao enviar mensagem.' });
+            }
         }
-        
     }
 
     postTeamsWebhook(req, res) {
