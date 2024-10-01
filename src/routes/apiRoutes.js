@@ -37,9 +37,9 @@ class ApiRoutes {
         res.json({
             text: `Recebi sua mensagem: "${text}"`,
         });
-        
+
         try {
-            const result = await sendToWhatsapp('https://api.callmebot.com/whatsapp.php', process.env.PHONE, process.env.API_KEY_CALLMEBOT, 'Teste 01');
+            const result = await sendToWhatsapp('https://api.callmebot.com/whatsapp.php', process.env.PHONE, process.env.API_KEY_CALLMEBOT, text);
             res.json(result);
         } catch (error) {
             res.status(500).json({ error: 'Erro ao enviar mensagem.' });
