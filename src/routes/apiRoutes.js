@@ -29,9 +29,9 @@ class ApiRoutes {
 
     async postWhatsappWebhook(req, res) {
         console.log('Requisição recebida:', req.body);
-        const { text, user } = req.body; // Captura o texto e o usuário
+        const { text } = req.body; // Captura o texto e o usuário
 
-        console.log(`Mensagem recebida de ${user}: ${text}`);
+        console.log(`Mensagem recebida: ${text}`);
 
         // Envia a resposta após a chamada da API
         res.json({
