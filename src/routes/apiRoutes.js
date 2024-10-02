@@ -1,5 +1,6 @@
 const textVersion = require('textversionjs');
 const sendToWhatsapp = require('../components/sendToWhatsapp');
+const channelArray = require('./configOutgoing');
 const { version } = require('../../package.json');
 require('dotenv').config();
 
@@ -38,11 +39,18 @@ class ApiRoutes {
         let plainText = textVersion(htmlText);
 
         try {
-            const result = await sendToWhatsapp('https://api.callmebot.com/whatsapp.php', process.env.PHONE, process.env.API_KEY_CALLMEBOT, plainText);
-            // Envia a resposta após a chamada da API
-            res.json({
-                text: `Recebi sua mensagem: "${text}"`,
+            channelArray.map(async (data) => {
+                if(data.id === 'eqscl') {
+                    data.phones.forEach(async (phone) => {
+                        const result = await sendToWhatsapp('https://api.callmebot.com/whatsapp.php', phone, process.env.API_KEY_CALLMEBOT, plainText);
+                    });
+                    // Envia a resposta após a chamada da API
+                    res.json({
+                        text: `Recebi sua mensagem: "${text}"`,
+                    });
+                }
             });
+
         } catch (error) {
             console.error('Erro ao enviar mensagem:', error.message || error);
             if (!res.headersSent) {
