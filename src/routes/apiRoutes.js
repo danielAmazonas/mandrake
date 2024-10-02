@@ -40,10 +40,14 @@ class ApiRoutes {
 
         try {
             channelArray.map(async (data) => {
-                if(data.id === 'eqscl') {
-                    data.phones.forEach(async (phone) => {
+                if (data.id === 'eqscl') {
+                    
+                    // Envia mensagens para cada telefone
+                    await Promise.all(data.phones.map(async (phone) => {
                         const result = await sendToWhatsapp('https://api.callmebot.com/whatsapp.php', phone, process.env.API_KEY_CALLMEBOT, plainText);
-                    });
+                        return result; // Retorna o resultado se necessário
+                    }));
+            
                     // Envia a resposta após a chamada da API
                     res.json({
                         text: `Recebi sua mensagem: "${text}"`,
