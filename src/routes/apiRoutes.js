@@ -1,5 +1,6 @@
 const textVersion = require('textversionjs');
 const sendToWhatsapp = require('../components/sendToWhatsapp');
+const sendToTeams = require('../components/sendToTeams');
 const channelArray = require('./configOutgoing');
 const { version } = require('../../package.json');
 require('dotenv').config();
@@ -63,9 +64,21 @@ class ApiRoutes {
     }
 
     postTeamsWebhook(req, res) {
-        res.json({
-            teams_webhook: 'teams_webhook'
-        });
+        const { text } = req.body; // Captura o texto e o usuário
+
+        try {
+            const result = sendToTeams(`${process.env.TEAMS_WEBHOOK_URL}`, text);
+            
+            res.json({
+                teams_webhook: 'teams_webhook'
+            });
+        } catch (error) {
+            console.error('Erro ao enviar mensagem:', error.message || error);
+            if (!res.headersSent) {
+                res.status(500).json({ error: 'Erro ao enviar mensagem.' });
+            }
+        }
+        
     }
 }
 
