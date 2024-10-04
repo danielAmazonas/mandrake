@@ -36,16 +36,13 @@ class ApiRoutes {
 
         console.log(`Mensagem recebida: ${text}`);
 
-        let htmlText = text.replace('<at>eqscl_output</at>&nbsp;', '🌐 Canal EQSCL: ');
-        let plainText = textVersion(htmlText);
-
         try {
             channelArray.map(async (data) => {
                 if (data.id === 'eqscl') {
                     
                     // Envia mensagens para cada telefone
                     await Promise.all(data.phones.map(async (phone) => {
-                        const result = await sendToWhatsapp('https://api.callmebot.com/whatsapp.php', phone, process.env.API_KEY_CALLMEBOT, plainText);
+                        const result = await sendToWhatsapp('https://api.callmebot.com/whatsapp.php', phone, process.env.API_KEY_CALLMEBOT, data.name);
                     }));
             
                     // Envia a resposta após a chamada da API
